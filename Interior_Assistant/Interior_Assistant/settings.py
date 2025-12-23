@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+    'ai_assist',
+    'designs',
+    'mediahub',
+    'projects',
+    'rooms',
+    'rules',
 ]
 
 MIDDLEWARE = [
@@ -74,10 +81,15 @@ WSGI_APPLICATION = 'Interior_Assistant.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Interior_Assistant_db', #  DB name
+        'USER': 'postgres',        # your DB user
+        'PASSWORD': 'postgres',    # your DB password
+        'HOST': '127.0.0.1',            # or your server IP
+        'PORT': '5432',                 # default PostgreSQL port
     }
 }
+
 
 
 # Password validation
