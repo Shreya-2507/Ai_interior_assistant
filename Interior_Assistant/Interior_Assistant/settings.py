@@ -11,6 +11,22 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+# Cloudinary Django-Integration
+cloudinary.config(
+    cloud_name="drk7k4xsg",
+    api_key="477498831432119",
+    api_secret="TzGvadaSgRC8kNudHU_0wTl7LQs",
+    secure=True
+)
+
+# Use Cloudinary to store media (images)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,9 +60,13 @@ INSTALLED_APPS = [
     'projects',
     'rooms',
     'rules',
+    'cloudinary',
+    'cloudinary_storage', 
+    'livereload',
 ]
 
 MIDDLEWARE = [
+    'livereload.middleware.LiveReloadScript',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,11 +77,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Interior_Assistant.urls'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\node.exe"
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +114,7 @@ DATABASES = {
         'PORT': '5432',                 # default PostgreSQL port
     }
 }
-
+ 
 
 
 # Password validation
@@ -110,6 +135,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -123,12 +150,205 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# # Static files (CSS, JavaScript, Images)
+# # https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+# STATIC_URL = 'static/'
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+# # Default primary key field type
+# # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# from pathlib import Path
+# import os
+# import cloudinary
+# import cloudinary.uploader
+# import cloudinary.api
+
+# # Cloudinary Django-Integration
+# cloudinary.config(
+#     cloud_name="drk7k4xsg",
+#     api_key="477498831432119",
+#     api_secret="TzGvadaSgRC8kNudHU_0wTl7LQs",
+#     secure=True
+# )
+
+# # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# # Quick-start development settings - unsuitable for production
+# # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'django-insecure-bp6)i-*((1_#s)73+n)ohuc9qi(jmm5u_td&vmn9h%&gsph0-l'
+
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+
+# ALLOWED_HOSTS = []
+
+
+# # Application definition
+
+# INSTALLED_APPS = [
+#     'django.contrib.admin',
+#     'django.contrib.auth',
+#     'django.contrib.contenttypes',
+#     'django.contrib.sessions',
+#     'django.contrib.messages',
+#     'django.contrib.staticfiles',
+#     'MedicFinder',
+#     'Accounts',
+#     'Stores',
+#     'medicines',
+#     'Inventry',
+#     "django_browser_reload",
+#     'widget_tweaks',
+#     'openpyxl',
+#     'tailwind',
+#     'theme',     
+#     'cloudinary',
+#     'cloudinary_storage', 
+# ]
+
+# # Use Cloudinary to store media (images)
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# # Tailwind settings
+# TAILWIND_APP_NAME = 'theme'  
+
+# MIDDLEWARE = [
+#     'django.middleware.security.SecurityMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     "django_browser_reload.middleware.BrowserReloadMiddleware",
+# ]
+
+# ROOT_URLCONF = 'MedicFinder.urls'
+
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+# ]
+
+# NPM_BIN_PATH = r"C:\Program Files\nodejs\node.exe"
+
+
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [BASE_DIR / 'templates'],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#                 'django.template.context_processors.media', 
+#             ],
+#         },
+#     },
+# ]
+
+# WSGI_APPLICATION = 'MedicFinder.wsgi.application'
+
+
+# # Database
+# # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+# # DATABASES = {
+# #     'default': {
+# #         'ENGINE': 'django.db.backends.sqlite3',
+# #         'NAME': BASE_DIR / 'db.sqlite3',
+# #     }
+# # }
+
+# DATABASES = {
+  
+#   "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "postgres",
+#         "USER": "postgres",
+#         "PASSWORD": "mypaswd123",
+#         "HOST": "127.0.0.1",
+#         "PORT": "5432",
+#     }
+        
+# }
+    
+
+
+
+# # Password validation
+# # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+#     },
+# ]
+
+# AUTH_USER_MODEL = 'Accounts.CustomUser'
+# # AUTH_USER_MODEL = 'auth.User'
+
+
+
+# # Internationalization
+# # https://docs.djangoproject.com/en/5.2/topics/i18n/
+
+# LANGUAGE_CODE = 'en-us'
+
+# TIME_ZONE = 'UTC'
+
+# USE_I18N = True
+
+# USE_TZ = True
+
+
+# # Static files (CSS, JavaScript, Images)
+# # https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+# STATIC_URL = 'static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
+
+# # Default primary key field type
+# # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# LOGIN_URL = '/login/'              
+# LOGIN_REDIRECT_URL = '/'           
+# LOGOUT_REDIRECT_URL = '/login/'     
+
+
+
+
+
+
+
+
